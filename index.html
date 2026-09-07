@@ -3,11 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dharan B | Electronics, Embedded Systems & Industrial Automation Portfolio (React)</title>
-  <meta name="description" content="Portfolio of Dharan B — ECE Engineering Student specializing in Industrial Automation, Offline Disaster Communication Systems, Embedded IoT, PLC, SCADA, and COMSOL Simulation. Built with React 18.">
   
-  <!-- CSS Stylesheet -->
+  <title>Dharan B | Electronics & Embedded Systems Engineer Portfolio</title>
+  <meta name="description" content="Personal engineering portfolio of Dharan B — Electronics & Communication Engineering Student specializing in Industrial Automation, Embedded IoT, PLC, SCADA, and COMSOL Electromagnetic Simulation. Built with React 18 & Three.js.">
+  <meta name="keywords" content="Dharan B, ECE Engineer, Embedded Systems, Industrial Automation, PLC, Siemens TIA Portal, SCADA, IoT, ESP32, COMSOL, Meenakshi Sundararajan Engineering College">
+  <meta name="author" content="Dharan B">
+  
+  <!-- OpenGraph Metadata -->
+  <meta property="og:title" content="Dharan B | Electronics & Embedded Systems Engineer">
+  <meta property="og:description" content="Engineering Intelligent Systems from Circuit to Cloud. Explore projects in Embedded IoT, Industrial Automation, and Electromagnetic Simulation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://portfolio-orpin-ten-84.vercel.app/">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Three.js (r128) 3D Engine CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <!-- React 18 & ReactDOM 18 CDN Scripts -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -15,13 +32,37 @@
   
   <!-- Babel Standalone Compiler for JSX in Browser -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Structured JSON-LD SEO Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Dharan B",
+    "jobTitle": "Electronics & Embedded Systems Engineer",
+    "alumniOf": "The Meenakshi Sundararajan Engineering College",
+    "sameAs": [
+      "https://www.linkedin.com/in/dharanbabu"
+    ],
+    "knowsAbout": [
+      "Embedded Systems",
+      "Industrial Automation",
+      "Siemens TIA Portal",
+      "PLC Programming",
+      "IoT",
+      "COMSOL Multiphysics",
+      "ESP32",
+      "Electronics"
+    ]
+  }
+  </script>
 </head>
 <body>
 
   <!-- React Application Mounting Root -->
   <div id="root"></div>
 
-  <!-- React 18 Application Script -->
-  <script type="text/babel" src="App.jsx"></script>
+  <!-- Vite TypeScript Module Script -->
+  <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>
