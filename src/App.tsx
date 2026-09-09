@@ -96,7 +96,7 @@ export function App() {
             <HeroSection personal={PORTFOLIO_DATA.personal} onNavigate={handleNavigate} />
             <EngineeringProfile domains={PORTFOLIO_DATA.domains} />
             <AboutSection personal={PORTFOLIO_DATA.personal} />
-            <SkillsSection categories={PORTFOLIO_DATA.skills} />
+            <SkillsSection categories={PORTFOLIO_DATA.skillsCategories || PORTFOLIO_DATA.skills || []} />
             <ProjectsSection projects={PORTFOLIO_DATA.projects} onSelectProject={setSelectedProject} />
             <EngineeringDashboard data={PORTFOLIO_DATA} onNavigate={handleNavigate} />
             <ExperienceSection experiences={PORTFOLIO_DATA.experiences} onViewCert={setSelectedCert} />
@@ -107,7 +107,7 @@ export function App() {
               onViewCert={setSelectedCert}
             />
             <JourneySection journey={PORTFOLIO_DATA.journey} />
-            <ExploringSection nodes={PORTFOLIO_DATA.exploring} />
+            <ExploringSection nodes={PORTFOLIO_DATA.currentlyExploring || PORTFOLIO_DATA.exploring || []} />
             <ContactSection personal={PORTFOLIO_DATA.personal} triggerToast={triggerToast} />
           </>
         ) : (
@@ -116,7 +116,7 @@ export function App() {
             {activeSection === 'hero' && <HeroSection personal={PORTFOLIO_DATA.personal} onNavigate={handleNavigate} />}
             {activeSection === 'domains' && <EngineeringProfile domains={PORTFOLIO_DATA.domains} />}
             {activeSection === 'about' && <AboutSection personal={PORTFOLIO_DATA.personal} />}
-            {activeSection === 'skills' && <SkillsSection categories={PORTFOLIO_DATA.skills} />}
+            {activeSection === 'skills' && <SkillsSection categories={PORTFOLIO_DATA.skillsCategories || PORTFOLIO_DATA.skills || []} />}
             {activeSection === 'projects' && <ProjectsSection projects={PORTFOLIO_DATA.projects} onSelectProject={setSelectedProject} />}
             {activeSection === 'dashboard' && <EngineeringDashboard data={PORTFOLIO_DATA} onNavigate={handleNavigate} />}
             {activeSection === 'experience' && <ExperienceSection experiences={PORTFOLIO_DATA.experiences} onViewCert={setSelectedCert} />}
@@ -129,7 +129,7 @@ export function App() {
               />
             )}
             {activeSection === 'journey' && <JourneySection journey={PORTFOLIO_DATA.journey} />}
-            {activeSection === 'exploring' && <ExploringSection nodes={PORTFOLIO_DATA.exploring} />}
+            {activeSection === 'exploring' && <ExploringSection nodes={PORTFOLIO_DATA.currentlyExploring || PORTFOLIO_DATA.exploring || []} />}
             {activeSection === 'contact' && <ContactSection personal={PORTFOLIO_DATA.personal} triggerToast={triggerToast} />}
           </div>
         )}

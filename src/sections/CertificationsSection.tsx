@@ -34,7 +34,16 @@ export const CertificationsSection: React.FC<CertificationsSectionProps> = ({
           {certifications.map((c) => (
             <div
               key={c.id}
-              onClick={() => onViewCert(c)}
+              onClick={() => onViewCert({
+                title: c.title,
+                authority: c.authority,
+                date: c.date,
+                refId: c.refId,
+                score: c.scoreBadge,
+                docPath: c.docPath,
+                docType: c.docType,
+                details: c.details,
+              })}
               className="glass-panel p-6 cursor-pointer flex flex-col justify-between hover:border-amber-500/50 transition-all duration-300 group shadow-lg"
             >
               <div>

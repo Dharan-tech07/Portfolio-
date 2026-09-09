@@ -127,11 +127,17 @@ export interface ExploringNode {
 export interface PortfolioData {
   personal: PersonalInfo;
   domains: DomainItem[];
+  /** Canonical skills list. `skills` is an alias pointing to the same array. */
   skillsCategories: SkillCategory[];
+  /** Alias for skillsCategories — set after initialisation. */
+  skills?: SkillCategory[];
   projects: ProjectItem[];
   experiences: ExperienceItem[];
   certifications: CertificationItem[];
   achievements: AchievementItem[];
   journey: JourneyStage[];
+  /** Canonical exploring list. `exploring` is an alias pointing to the same array. */
   currentlyExploring: ExploringNode[];
+  /** Alias for currentlyExploring — set after initialisation. */
+  exploring?: ExploringNode[];
 }

@@ -100,6 +100,7 @@ export const Hero3DVisualizer: React.FC = () => {
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('resize', handleResize);
         cancelAnimationFrame(animId);
+        renderer.dispose();
         if (container && renderer.domElement && container.contains(renderer.domElement)) {
           container.removeChild(renderer.domElement);
         }

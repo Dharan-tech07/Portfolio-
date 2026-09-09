@@ -445,5 +445,9 @@ export const PORTFOLIO_DATA: PortfolioData = {
       desc: "Exploring modern AI tools for automated code documentation, simulation post-processing, and control logic validation.",
       tag: "Technological Exploration"
     }
-  ]
+  ],
 };
+
+// Populate optional alias fields so App.tsx fallback references always resolve
+PORTFOLIO_DATA.skills = PORTFOLIO_DATA.skillsCategories;
+PORTFOLIO_DATA.exploring = PORTFOLIO_DATA.currentlyExploring;
