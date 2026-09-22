@@ -59,6 +59,27 @@ export const Hero3DVisualizer: React.FC = () => {
       ringMesh.rotation.x = Math.PI / 3.5;
       scene.add(ringMesh);
 
+      // Add particle field (Technology nodes)
+      const particleCount = 400;
+      const particlesGeo = new THREE.BufferGeometry();
+      const posArray = new Float32Array(particleCount * 3);
+      
+      for(let i = 0; i < particleCount * 3; i++) {
+        // distribute them in a wider sphere
+        posArray[i] = (Math.random() - 0.5) * 15;
+      }
+      
+      particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const particlesMat = new THREE.PointsMaterial({
+        size: 0.03,
+        color: 0x06b6d4,
+        transparent: true,
+        opacity: 0.6,
+        blending: THREE.AdditiveBlending
+      });
+      const particleMesh = new THREE.Points(particlesGeo, particlesMat);
+      scene.add(particleMesh);
+
       let mouseX = 0;
       let mouseY = 0;
       const handleMouseMove = (e: MouseEvent) => {
@@ -78,9 +99,15 @@ export const Hero3DVisualizer: React.FC = () => {
         innerMesh.rotation.y -= 0.004;
 
         ringMesh.rotation.z += 0.002;
+        
+        particleMesh.rotation.y += 0.0005;
+        particleMesh.rotation.x += 0.0002;
 
         coreMesh.rotation.y += (mouseX * 0.4 - coreMesh.rotation.y) * 0.05;
         coreMesh.rotation.x += (-mouseY * 0.4 - coreMesh.rotation.x) * 0.05;
+        
+        particleMesh.rotation.y += (mouseX * 0.1) * 0.02;
+        particleMesh.rotation.x += (-mouseY * 0.1) * 0.02;
 
         renderer.render(scene, camera);
       };

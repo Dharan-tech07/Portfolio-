@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { CertificationItem, AchievementItem } from '../types/portfolio';
 import { CertModalData } from '../components/CertModal';
 import { Award, ShieldCheck, Search, Trophy, FileText } from 'lucide-react';
@@ -30,9 +31,23 @@ export const CertificationsSection: React.FC<CertificationsSectionProps> = ({
         </div>
 
         {/* Certifications Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+          }}
+        >
           {certifications.map((c) => (
-            <div
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+              }}
+              whileHover={{ y: -5, rotateX: 2, rotateY: -2, scale: 1.02 }}
               key={c.id}
               onClick={() => onViewCert({
                 title: c.title,
@@ -44,9 +59,10 @@ export const CertificationsSection: React.FC<CertificationsSectionProps> = ({
                 docType: c.docType,
                 details: c.details,
               })}
-              className="glass-panel p-6 cursor-pointer flex flex-col justify-between hover:border-amber-500/50 transition-all duration-300 group shadow-lg"
+              className="glass-panel p-6 cursor-pointer flex flex-col justify-between hover:border-amber-500/50 transition-all duration-300 group shadow-lg overflow-hidden relative"
             >
-              <div>
+              <div className="absolute inset-0 bg-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="relative z-10">
                 <div className="flex items-center justify-between mb-3">
                   <span className="px-2.5 py-0.5 text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-md">
                     {c.authority}
@@ -69,7 +85,7 @@ export const CertificationsSection: React.FC<CertificationsSectionProps> = ({
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-obsidian-700/80 flex items-center justify-between">
+              <div className="pt-4 border-t border-obsidian-700/80 flex items-center justify-between relative z-10">
                 <span className="text-xs font-mono text-amber-400 font-semibold">
                   Ref: {c.refId}
                 </span>
@@ -78,13 +94,18 @@ export const CertificationsSection: React.FC<CertificationsSectionProps> = ({
                   <span>Inspect Credential 🔍</span>
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Hackathon Achievement Spotlight */}
         {achievements.map((ach) => (
-          <div
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            whileHover={{ scale: 1.02 }}
             key={ach.id}
             className="glass-panel glass-panel-gold p-8 border-amber-500/50 shadow-2xl relative overflow-hidden"
           >
@@ -135,7 +156,7 @@ export const CertificationsSection: React.FC<CertificationsSectionProps> = ({
                 <span>Inspect Hackathon Certificate</span>
               </button>
             </div>
-          </div>
+          </motion.div>
         ))}
 
       </div>

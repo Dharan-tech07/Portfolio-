@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { PersonalInfo } from '../types/portfolio';
 import { User, Cpu, BookOpen, Target, ArrowRight } from 'lucide-react';
 
@@ -23,13 +24,29 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
         </div>
 
         {/* Split Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+          }}
+        >
           
           {/* Left 4 Structured Highlight Cards */}
           <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
             
             {/* Who I Am */}
-            <div className="glass-panel p-6 border-amber-500/40 hover:border-amber-500/70 shadow-[0_0_15px_rgba(245,158,11,0.05)] flex flex-col justify-between">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+              }}
+              whileHover={{ y: -5, rotateX: 2, rotateY: -2 }}
+              className="glass-panel p-6 border-amber-500/40 hover:border-amber-500/70 shadow-[0_0_15px_rgba(245,158,11,0.05)] flex flex-col justify-between"
+            >
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 bg-amber-500/10 border border-amber-500/30 rounded-lg text-amber-400">
@@ -46,10 +63,17 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
                   <div className="text-amber-400 text-[10px] mt-0.5">Register No: {personal.registerNo}</div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* What I Build */}
-            <div className="glass-panel p-6 flex flex-col justify-between">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+              }}
+              whileHover={{ y: -5, rotateX: 2, rotateY: -2 }}
+              className="glass-panel p-6 flex flex-col justify-between hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.1)] transition-all"
+            >
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 bg-cyan-500/10 border border-cyan-500/30 rounded-lg text-cyan-400">
@@ -66,10 +90,17 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
                 <span className="px-2 py-0.5 text-[10px] font-mono bg-obsidian-900 text-cyan-400 rounded">PLC Ladder</span>
                 <span className="px-2 py-0.5 text-[10px] font-mono bg-obsidian-900 text-cyan-400 rounded">Java / Python</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* What I Am Learning */}
-            <div className="glass-panel p-6 flex flex-col justify-between">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+              }}
+              whileHover={{ y: -5, rotateX: 2, rotateY: -2 }}
+              className="glass-panel p-6 flex flex-col justify-between hover:border-violet-500/50 hover:shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all"
+            >
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 bg-violet-500/10 border border-violet-500/30 rounded-lg text-violet-400">
@@ -86,10 +117,17 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
                 <span className="px-2 py-0.5 text-[10px] font-mono bg-obsidian-900 text-violet-400 rounded">Siemens TIA</span>
                 <span className="px-2 py-0.5 text-[10px] font-mono bg-obsidian-900 text-violet-400 rounded">Wireless Telemetry</span>
               </div>
-            </div>
+            </motion.div>
 
             {/* What I Want To Work On */}
-            <div className="glass-panel p-6 flex flex-col justify-between">
+            <motion.div 
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+              }}
+              whileHover={{ y: -5, rotateX: 2, rotateY: -2 }}
+              className="glass-panel p-6 flex flex-col justify-between hover:border-emerald-500/50 hover:shadow-[0_0_15px_rgba(16,185,129,0.1)] transition-all"
+            >
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <div className="p-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg text-emerald-400">
@@ -106,12 +144,19 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
                 <span className="px-2 py-0.5 text-[10px] font-mono bg-obsidian-900 text-emerald-400 rounded">Embedded Hardware</span>
                 <span className="px-2 py-0.5 text-[10px] font-mono bg-obsidian-900 text-emerald-400 rounded">R&D Roles</span>
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
           {/* Right Technical Workflow Diagram */}
-          <div className="lg:col-span-4 bg-obsidian-900/80 border border-obsidian-700/80 rounded-2xl p-6 flex flex-col justify-between">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, x: 30 },
+              visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+            }}
+            whileHover={{ scale: 1.01 }}
+            className="lg:col-span-4 bg-obsidian-900/80 border border-obsidian-700/80 rounded-2xl p-6 flex flex-col justify-between hover:border-cyan-500/30 transition-all"
+          >
             <div>
               <div className="text-xs font-mono text-cyan-400 font-semibold tracking-wider uppercase mb-2">
                 ENGINEERING WORKFLOW DISCIPLINE
@@ -157,9 +202,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ personal }) => {
             <div className="pt-6 border-t border-obsidian-700/60 text-xs text-slate-400">
               <span className="text-amber-400 font-semibold font-mono">HANDS-ON APPROACH:</span> Understanding system behavior by physically wiring panels, debugging signal noise, and verifying logic on live hardware.
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectItem } from '../types/portfolio';
 import { ArchitectureFlow } from './ArchitectureFlow';
 import { X, ExternalLink, Github, AlertTriangle, Lightbulb, CheckCircle, Cpu } from 'lucide-react';
@@ -9,17 +10,40 @@ interface ProjectModalProps {
 }
 
 export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) => {
-  if (!project) return null;
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (project) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleEscape);
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('keydown', handleEscape);
+    };
+  }, [project, onClose]);
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in"
-      onClick={onClose}
-    >
-      <div
-        className="bg-obsidian-950 border border-obsidian-700/90 rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <AnimatePresence>
+      {project && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 30 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 30 }}
+            transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+            className="bg-obsidian-950 border border-obsidian-700/90 rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-[0_0_50px_rgba(6,182,212,0.1)] overflow-hidden my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
         {/* Header */}
         <div className="p-6 border-b border-obsidian-700/80 flex items-start justify-between bg-obsidian-900/60">
           <div>
@@ -149,7 +173,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             </button>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
+      )}
+    </AnimatePresence>
   );
 };

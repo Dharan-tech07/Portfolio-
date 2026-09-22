@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { ProjectItem } from '../types/portfolio';
 import { ArchitectureFlow } from '../components/ArchitectureFlow';
 import { ArrowRight, Layers, Cpu, CheckCircle } from 'lucide-react';
@@ -20,12 +21,36 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, onSe
     );
   }, [activeFilter, projects]);
 
+    const containerVariants = {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.15
+        }
+      }
+    };
+  
+    const itemVariants = {
+      hidden: { opacity: 0, y: 30 },
+      visible: { 
+        opacity: 1, 
+        y: 0,
+        transition: { type: 'spring', stiffness: 300, damping: 24 }
+      }
+    };
+
   return (
     <section id="projects" className="py-20 relative bg-obsidian-950/40 border-y border-obsidian-700/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <motion.div 
+          className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div>
             <div className="section-eyebrow">04 // PROJECTS & CASE STUDIES</div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
@@ -52,16 +77,27 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, onSe
               </button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Projects Case Study Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {filteredProjects.map((proj) => (
-            <div
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ y: -5, rotateX: 2, rotateY: -2, zIndex: 10 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               key={proj.id}
-              className="glass-panel p-6 flex flex-col justify-between group hover:border-amber-500/50 transition-all duration-300 shadow-lg"
+              className="glass-panel p-6 flex flex-col justify-between group hover:border-amber-500/50 transition-all duration-300 shadow-lg project-card relative overflow-hidden"
             >
-              <div>
+              {/* Subtle hover background glow */}
+              <div className="absolute inset-0 bg-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <div className="relative z-10">
                 {/* Project Header */}
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-xs font-mono text-amber-400 font-semibold tracking-wider">
@@ -115,9 +151,9 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects, onSe
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

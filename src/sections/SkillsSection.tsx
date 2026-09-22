@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { SkillCategory } from '../types/portfolio';
 import { Zap, Cpu, Cog, Code, Wifi, Activity, Layout, Terminal, CheckCircle2 } from 'lucide-react';
 
@@ -44,12 +45,36 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
     ? categories
     : categories.filter(c => c.code === selectedCat);
 
+    const containerVariants = {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.1
+        }
+      }
+    };
+  
+    const itemVariants = {
+      hidden: { opacity: 0, y: 20 },
+      visible: { 
+        opacity: 1, 
+        y: 0,
+        transition: { type: 'spring', stiffness: 300, damping: 24 }
+      }
+    };
+
   return (
     <section id="skills" className="py-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="mb-10">
+        <motion.div 
+          className="mb-10"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className="section-eyebrow">03 // SKILLS MATRIX</div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-100 tracking-tight">
             Technical Competencies & Standards
@@ -57,7 +82,7 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
           <p className="text-slate-400 text-sm sm:text-base max-w-3xl mt-2">
             Categorized technical competencies grounded in practical field internship exposure, embedded hardware projects, and academic coursework.
           </p>
-        </div>
+        </motion.div>
 
         {/* Category Filter Pills */}
         <div className="flex flex-wrap gap-2 mb-8">
@@ -88,20 +113,35 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+        >
           {filteredCategories.map((cat) => (
-            <div
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.02, rotateX: 2, rotateY: -2, zIndex: 10 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               key={cat.code}
-              className="glass-panel p-6 flex flex-col justify-between hover:border-cyan-500/40 transition-all"
+              className="glass-panel p-6 flex flex-col justify-between hover:border-cyan-500/60 transition-all shadow-[0_0_0_rgba(6,182,212,0)] hover:shadow-[0_0_30px_rgba(6,182,212,0.15)] relative overflow-hidden group skill-card"
             >
-              <div>
+              {/* Subtle hover background glow */}
+              <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+              <div className="relative z-10">
                 {/* Card Top */}
                 <div className="flex items-center justify-between pb-4 mb-4 border-b border-obsidian-700/80">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 bg-obsidian-900 border border-obsidian-700/80 rounded-lg">
+                    <motion.div 
+                      className="p-2 bg-obsidian-900 border border-obsidian-700/80 rounded-lg group-hover:scale-110 group-hover:border-cyan-500/50 transition-all duration-300"
+                      whileHover={{ rotate: 180 }}
+                    >
                       {getCategoryIcon(cat.icon)}
-                    </div>
-                    <h3 className="text-base font-bold text-slate-100">{cat.title}</h3>
+                    </motion.div>
+                    <h3 className="text-base font-bold text-slate-100 group-hover:text-cyan-400 transition-colors">{cat.title}</h3>
                   </div>
                   <span className="text-xs font-mono text-slate-500">{cat.code}</span>
                 </div>
@@ -109,17 +149,18 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
                 {/* Skills List */}
                 <div className="space-y-3">
                   {cat.skills.map((s, sIdx) => (
-                    <div
+                    <motion.div
+                      whileHover={{ x: 4, backgroundColor: 'rgba(6, 182, 212, 0.05)' }}
                       key={sIdx}
-                      className="p-2.5 bg-obsidian-950/60 border border-obsidian-800/80 rounded-lg hover:border-obsidian-700 transition-colors"
+                      className="p-2.5 bg-obsidian-950/60 border border-obsidian-800/80 rounded-lg hover:border-cyan-500/40 transition-all duration-300 relative overflow-hidden"
                     >
-                      <div className="text-xs font-medium text-slate-200 flex items-center justify-between mb-1.5">
+                      <div className="text-xs font-medium text-slate-200 flex items-center justify-between mb-1.5 relative z-10">
                         <span className="flex items-center gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                           <span>{s.name}</span>
                         </span>
                       </div>
-                      <div className="flex justify-end">
+                      <div className="flex justify-end relative z-10">
                         <span
                           className={`px-2 py-0.5 text-[9px] font-mono border rounded ${getLevelBadgeStyle(
                             s.level
@@ -128,19 +169,19 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
                           {s.level}
                         </span>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
               {/* Category Footer */}
-              <div className="pt-4 mt-4 border-t border-obsidian-700/60 text-[10px] font-mono text-slate-500 flex justify-between">
+              <div className="pt-4 mt-4 border-t border-obsidian-700/60 text-[10px] font-mono text-slate-500 flex justify-between relative z-10">
                 <span>{cat.skills.length} Competencies</span>
-                <span className="text-cyan-400">Verified</span>
+                <span className="text-cyan-400 font-bold group-hover:animate-pulse">Verified</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { PersonalInfo } from '../types/portfolio';
 import { Hero3DVisualizer } from '../components/Hero3DVisualizer';
 import { ArrowRight, FileText, Send, Award, Layers } from 'lucide-react';
@@ -9,43 +10,67 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ personal, onNavigate }) => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { type: 'spring', stiffness: 300, damping: 24 }
+    }
+  };
+
   return (
     <section id="hero" className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Text Column */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            
+          <motion.div 
+            className="lg:col-span-7 space-y-6 text-left"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {/* Status Indicator */}
-            <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-obsidian-900/90 border border-obsidian-700/80 text-xs font-mono text-slate-300 backdrop-blur-md">
+            <motion.div variants={itemVariants} className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-obsidian-900/90 border border-obsidian-700/80 text-xs font-mono text-slate-300 backdrop-blur-md">
               <span className="pulse-indicator" />
               <span>{personal.statusText}</span>
-            </div>
+            </motion.div>
 
             {/* Main Name & Title */}
-            <div>
+            <motion.div variants={itemVariants}>
               <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-100">
                 Dharan <span className="gradient-text">B</span>
               </h1>
               <div className="text-lg sm:text-2xl font-semibold text-cyan-400 font-mono mt-2 tracking-wide">
                 {personal.headline}
               </div>
-            </div>
+            </motion.div>
 
             {/* Subtitle / Department Info */}
-            <div className="text-sm font-mono text-slate-400 border-l-2 border-amber-500/80 pl-4 py-1">
+            <motion.div variants={itemVariants} className="text-sm font-mono text-slate-400 border-l-2 border-amber-500/80 pl-4 py-1">
               <div>{personal.degree}</div>
               <div className="text-slate-500 text-xs mt-0.5">{personal.institution} ({personal.affiliation})</div>
-            </div>
+            </motion.div>
 
             {/* Bio Paragraph */}
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
+            <motion.p variants={itemVariants} className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl">
               {personal.bio}
-            </p>
+            </motion.p>
 
             {/* CTA Buttons Grid */}
-            <div className="pt-2 flex flex-wrap gap-3">
+            <motion.div variants={itemVariants} className="pt-2 flex flex-wrap gap-3">
               <button
                 onClick={() => onNavigate('projects')}
                 className="flex items-center gap-2 px-5 py-3 text-xs sm:text-sm font-mono font-bold bg-cyan-500 hover:bg-cyan-400 text-obsidian-950 rounded-xl transition-all shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] transform hover:-translate-y-0.5"
@@ -77,10 +102,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personal, onNavigate }
                 <Send className="w-4 h-4 text-slate-400" />
                 <span>Contact Me</span>
               </button>
-            </div>
+            </motion.div>
 
             {/* Quick Metrics Bar */}
-            <div className="pt-6 border-t border-obsidian-700/60 grid grid-cols-3 gap-4 text-left">
+            <motion.div variants={itemVariants} className="pt-6 border-t border-obsidian-700/60 grid grid-cols-3 gap-4 text-left">
               <div>
                 <div className="text-xl font-bold font-mono text-cyan-400">B.E. ECE</div>
                 <div className="text-[11px] font-mono text-slate-500">Degree Program</div>
@@ -93,14 +118,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ personal, onNavigate }
                 <div className="text-xl font-bold font-mono text-emerald-400">Siemens TIA</div>
                 <div className="text-[11px] font-mono text-slate-500">PLC Field Exposure</div>
               </div>
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
           {/* Right 3D Visualizer Column */}
-          <div className="lg:col-span-5 relative flex justify-center items-center">
+          <motion.div 
+            className="lg:col-span-5 relative flex justify-center items-center"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.4 }}
+          >
             <Hero3DVisualizer />
-          </div>
+          </motion.div>
 
         </div>
       </div>

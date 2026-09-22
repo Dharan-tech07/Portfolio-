@@ -6,6 +6,7 @@ import { Navigation } from './components/Navigation';
 import { ProjectModal } from './components/ProjectModal';
 import { CertModal, CertModalData } from './components/CertModal';
 import { Toast } from './components/Toast';
+import { CustomCursor } from './components/CustomCursor';
 
 import { HeroSection } from './sections/HeroSection';
 import { EngineeringProfile } from './sections/EngineeringProfile';
@@ -77,6 +78,9 @@ export function App() {
         className="scroll-progress"
         style={{ width: `${scrollProgress}%` }}
       />
+      
+      {/* Custom Cursor */}
+      <CustomCursor />
 
       {/* Reactive Circuit Ambient Background */}
       <AmbientCanvas />

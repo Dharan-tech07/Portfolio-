@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { JourneyStage } from '../types/portfolio';
 import { Compass, CheckCircle2 } from 'lucide-react';
 
@@ -23,9 +24,26 @@ export const JourneySection: React.FC<JourneySectionProps> = ({ journey }) => {
         </div>
 
         {/* Journey Timeline Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.2 }
+            }
+          }}
+        >
           {journey.map((item, idx) => (
-            <div
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+              }}
+              whileHover={{ scale: 1.02, rotateZ: idx % 2 === 0 ? 1 : -1, zIndex: 10 }}
               key={item.stage}
               className="glass-panel p-6 relative flex flex-col justify-between hover:border-cyan-500/50 transition-all duration-300 group"
             >
@@ -56,9 +74,9 @@ export const JourneySection: React.FC<JourneySectionProps> = ({ journey }) => {
                 </span>
                 <span>Stage {idx + 1} of {journey.length}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

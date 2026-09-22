@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ExperienceItem } from '../types/portfolio';
 import { CertModalData } from '../components/CertModal';
 import { Briefcase, MapPin, Search, CheckCircle2 } from 'lucide-react';
@@ -28,12 +29,31 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
         </div>
 
         {/* Vertical Progress Timeline */}
-        <div className="relative border-l-2 border-obsidian-700/80 ml-4 sm:ml-8 space-y-12 pl-6 sm:pl-10">
+        <motion.div 
+          className="relative border-l-2 border-obsidian-700/80 ml-4 sm:ml-8 space-y-12 pl-6 sm:pl-10"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.3 } }
+          }}
+        >
           {experiences.map((exp) => (
-            <div key={exp.id} className="relative group">
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, x: -30 },
+                visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 300, damping: 25 } }
+              }}
+              key={exp.id} 
+              className="relative group"
+            >
               
               {/* Timeline Dot */}
-              <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full bg-obsidian-950 border-2 border-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)] group-hover:scale-125 transition-transform" />
+              <motion.div 
+                whileHover={{ scale: 1.5 }}
+                className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full bg-obsidian-950 border-2 border-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)] group-hover:scale-125 transition-transform origin-center" 
+              />
 
               {/* Experience Card */}
               <div className="glass-panel p-6 sm:p-8 hover:border-amber-500/50 transition-all duration-300 shadow-xl">
@@ -110,9 +130,9 @@ export const ExperienceSection: React.FC<ExperienceSectionProps> = ({
                 </div>
 
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
       </div>
     </section>

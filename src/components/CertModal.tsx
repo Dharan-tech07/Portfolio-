@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Copy, ShieldCheck, FileText, Download } from 'lucide-react';
 
 export interface CertModalData {
@@ -28,16 +29,25 @@ export const CertModal: React.FC<CertModalProps> = ({ cert, onClose, triggerToas
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-fade-in"
-      onClick={onClose}
-    >
-      <div
-        className="bg-obsidian-950 border border-obsidian-700/90 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Header */}
-        <div className="p-5 border-b border-obsidian-700/80 flex items-start justify-between bg-obsidian-900/60">
+    <AnimatePresence>
+      {cert && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto"
+          onClick={onClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="bg-obsidian-950 border border-obsidian-700/90 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden my-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="p-5 border-b border-obsidian-700/80 flex items-start justify-between bg-obsidian-900/60">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <ShieldCheck className="w-4 h-4 text-amber-400" />
@@ -147,7 +157,9 @@ export const CertModal: React.FC<CertModalProps> = ({ cert, onClose, triggerToas
             </button>
           </div>
         </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
