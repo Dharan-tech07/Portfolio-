@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SkillCategory } from '../types/portfolio';
-import { Zap, Cpu, Cog, Code, Wifi, Activity, Layout, Terminal, CheckCircle2 } from 'lucide-react';
+import { Zap, Cpu, Cog, Code, Wifi, Activity, Layout, Terminal } from 'lucide-react';
+import { 
+  SiArduino, SiEspressif, SiSiemens, SiJavascript, 
+  SiHtml5, SiCplusplus
+} from 'react-icons/si';
+import { 
+  FaJava, FaPython, FaReact, FaGitAlt, FaGithub, FaPlug, FaMicrochip, FaCss3Alt 
+} from 'react-icons/fa';
+import { VscCircuitBoard, VscTerminalCmd } from "react-icons/vsc";
+import { TbWaveSine, TbTopologyStarRing } from "react-icons/tb";
 
 interface SkillsSectionProps {
   categories: SkillCategory[];
@@ -24,20 +33,37 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
     }
   };
 
+  const getSkillLogo = (skillName: string) => {
+    const s = skillName.toLowerCase();
+    if (s.includes('java') && !s.includes('script')) return <FaJava className="w-5 h-5 text-red-500" />;
+    if (s.includes('python')) return <FaPython className="w-5 h-5 text-blue-400" />;
+    if (s.includes('react')) return <FaReact className="w-5 h-5 text-cyan-400" />;
+    if (s.includes('c / c++') || s.includes('c++')) return <SiCplusplus className="w-5 h-5 text-blue-500" />;
+    if (s.includes('javascript')) return <SiJavascript className="w-5 h-5 text-yellow-400" />;
+    if (s.includes('html')) return <SiHtml5 className="w-5 h-5 text-orange-500" />;
+    if (s.includes('css')) return <FaCss3Alt className="w-5 h-5 text-blue-400" />;
+    if (s.includes('git ') || s.includes('github')) return <FaGithub className="w-5 h-5 text-white" />;
+    if (s.includes('arduino')) return <SiArduino className="w-5 h-5 text-teal-500" />;
+    if (s.includes('esp32')) return <SiEspressif className="w-5 h-5 text-red-600" />;
+    if (s.includes('siemens') || s.includes('plc')) return <SiSiemens className="w-5 h-5 text-teal-400" />;
+    if (s.includes('matlab') || s.includes('comsol')) return <TbWaveSine className="w-5 h-5 text-purple-400" />;
+    if (s.includes('vs code')) return <VscTerminalCmd className="w-5 h-5 text-blue-500" />;
+    if (s.includes('sensor')) return <FaMicrochip className="w-5 h-5 text-slate-400" />;
+    if (s.includes('circuit') || s.includes('panel') || s.includes('eplan')) return <VscCircuitBoard className="w-5 h-5 text-emerald-400" />;
+    if (s.includes('wiring') || s.includes('testing')) return <FaPlug className="w-5 h-5 text-amber-500" />;
+    if (s.includes('spi') || s.includes('i2c') || s.includes('uart') || s.includes('telemetry')) return <TbTopologyStarRing className="w-5 h-5 text-cyan-500" />;
+    if (s.includes('motor') || s.includes('vfd')) return <Cog className="w-5 h-5 text-amber-400" />;
+    return <Cpu className="w-5 h-5 text-slate-400" />; // Fallback
+  };
+
   const getLevelBadgeStyle = (level: string) => {
     switch (level) {
-      case 'Strong Foundation':
-        return 'bg-amber-500/10 text-amber-400 border-amber-500/40 font-semibold';
-      case 'Practical Exposure':
-        return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/40 font-semibold';
-      case 'Project Experience':
-        return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/40';
-      case 'Working Knowledge':
-        return 'bg-slate-800 text-slate-300 border-slate-700';
-      case 'Currently Learning':
-        return 'bg-violet-500/10 text-violet-400 border-violet-500/40';
-      default:
-        return 'bg-slate-800 text-slate-400 border-slate-700';
+      case 'Strong Foundation': return 'bg-amber-500/10 text-amber-400 border-amber-500/40 font-semibold';
+      case 'Practical Exposure': return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/40 font-semibold';
+      case 'Project Experience': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/40';
+      case 'Working Knowledge': return 'bg-slate-800 text-slate-300 border-slate-700';
+      case 'Currently Learning': return 'bg-violet-500/10 text-violet-400 border-violet-500/40';
+      default: return 'bg-slate-800 text-slate-400 border-slate-700';
     }
   };
 
@@ -45,24 +71,15 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
     ? categories
     : categories.filter(c => c.code === selectedCat);
 
-    const containerVariants = {
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: {
-          staggerChildren: 0.1
-        }
-      }
-    };
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+  };
   
-    const itemVariants = {
-      hidden: { opacity: 0, y: 20 },
-      visible: { 
-        opacity: 1, 
-        y: 0,
-        transition: { type: 'spring', stiffness: 300, damping: 24 }
-      }
-    };
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+  };
 
   return (
     <section id="skills" className="py-20 relative">
@@ -146,36 +163,29 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ categories }) => {
                   <span className="text-xs font-mono text-slate-500">{cat.code}</span>
                 </div>
 
-                {/* Skills List */}
-                <div className="space-y-3">
+                {/* Skills Icon Grid Layout - Redesigned to show large icons per user request */}
+                <div className="grid grid-cols-2 gap-3 mt-4">
                   {cat.skills.map((s, sIdx) => (
                     <motion.div
-                      whileHover={{ x: 4, backgroundColor: 'rgba(6, 182, 212, 0.05)' }}
+                      whileHover={{ scale: 1.05, y: -2, backgroundColor: 'rgba(6, 182, 212, 0.08)' }}
                       key={sIdx}
-                      className="p-2.5 bg-obsidian-950/60 border border-obsidian-800/80 rounded-lg hover:border-cyan-500/40 transition-all duration-300 relative overflow-hidden"
+                      className="p-3 bg-obsidian-950/80 border border-obsidian-800/80 rounded-xl hover:border-cyan-500/50 transition-all duration-300 flex flex-col items-center justify-center text-center gap-2 relative group/item"
+                      title={s.level}
                     >
-                      <div className="text-xs font-medium text-slate-200 flex items-center justify-between mb-1.5 relative z-10">
-                        <span className="flex items-center gap-1.5">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                          <span>{s.name}</span>
-                        </span>
+                      {/* Real Technology Icon */}
+                      <div className="p-2 bg-obsidian-900 rounded-lg border border-obsidian-700 group-hover/item:border-cyan-500/50 transition-colors shadow-sm">
+                        {getSkillLogo(s.name)}
                       </div>
-                      <div className="flex justify-end relative z-10">
-                        <span
-                          className={`px-2 py-0.5 text-[9px] font-mono border rounded ${getLevelBadgeStyle(
-                            s.level
-                          )}`}
-                        >
-                          {s.level}
-                        </span>
-                      </div>
+                      <span className="text-[10px] sm:text-xs font-semibold text-slate-300 leading-tight">
+                        {s.name}
+                      </span>
                     </motion.div>
                   ))}
                 </div>
               </div>
 
               {/* Category Footer */}
-              <div className="pt-4 mt-4 border-t border-obsidian-700/60 text-[10px] font-mono text-slate-500 flex justify-between relative z-10">
+              <div className="pt-4 mt-6 border-t border-obsidian-700/60 text-[10px] font-mono text-slate-500 flex justify-between relative z-10">
                 <span>{cat.skills.length} Competencies</span>
                 <span className="text-cyan-400 font-bold group-hover:animate-pulse">Verified</span>
               </div>
